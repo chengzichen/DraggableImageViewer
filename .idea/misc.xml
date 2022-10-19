@@ -4,5 +4,21 @@
     <asm skipDebug="false" skipFrames="false" skipCode="false" expandFrames="false" />
     <groovy codeStyle="LEGACY" />
   </component>
-  <component name="ProjectRootManager" version="2" languageLevel="JDK_1_8" project-jdk-name="1.8" project-jdk-type="JavaSDK" />
+  <component name="DesignSurface">
+    <option name="filePathToZoomLevelMap">
+      <map>
+        <entry key="dragable_image_viewer/src/main/res/layout/view_draggable_simple_image.xml" value="0.16945288753799392" />
+        <entry key="dragable_image_viewer/src/main/res/layout/view_image_viewr.xml" value="0.3484375" />
+        <entry key="dragable_image_viewer/src/main/res/layout/view_simple_max_width_image_viewer.xml" value="0.3484375" />
+      </map>
+    </option>
+  </component>
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_1_8" default="true" project-jdk-name="1.8" project-jdk-type="JavaSDK" />
+  <component name="SuppressABINotification">
+    <option name="modulesWithSuppressedNotConfigured">
+      <set>
+        <option value="DraggableImageViewer.dragable_image_viewer" />
+      </set>
+    </option>
+  </component>
 </project>

@@ -1,7 +1,6 @@
 package com.draggable.library.extension
 
 import android.content.Context
-import android.graphics.Rect
 import android.view.View
 import com.draggable.library.core.DraggableParamsInfo
 import com.draggable.library.extension.entities.DraggableImageInfo
@@ -146,6 +145,72 @@ object ImageViewerHelper {
         ImagesViewerActivity.start(context, draggableImageInfos, picIndex)
     }
 
+    fun showImagesWithDraggableParamsInfo(
+        context: Context,
+        draggableParamsInfo: DraggableParamsInfo?,
+        imgInfos: List<ImageInfo>,
+        picIndex: Int = 0,
+        showDownLoadBtn: Boolean = true
+    ){
+        if (imgInfos.isEmpty()) return
+        //多张图片开启复杂的方式显示
+        val draggableImageInfos = ArrayList<DraggableImageInfo>()
+        imgInfos.forEachIndexed { index, imageInfo ->
+            if (draggableParamsInfo != null && index == picIndex) {
+                draggableImageInfos.add(
+                    createImageDraggableParamsWithWHRadioByD(
+                        draggableParamsInfo,
+                        imageInfo.originUrl,
+                        imageInfo.thumbnailUrl,
+                        imageInfo.imgSize,
+                        showDownLoadBtn
+                    )
+                )
+            } else {
+                draggableImageInfos.add(
+                    createImageDraggableParamsWithWHRadioByD(
+                        null,
+                        imageInfo.originUrl,
+                        imageInfo.thumbnailUrl,
+                        imageInfo.imgSize,
+                        showDownLoadBtn
+                    )
+                )
+            }
+        }
+        ImagesViewerActivity.start(context, draggableImageInfos, picIndex)
+    }
+
+
+
+    /**
+     * 根据宽高比，显示一张图片
+     * @param whRadio  图片宽高比
+     * */
+    private fun createImageDraggableParamsWithWHRadioByD(
+        draggableParamsInfo: DraggableParamsInfo?,
+        originUrl: String,
+        thumbUrl: String,
+        imgSize: Long = 0,
+        showDownLoadBtn: Boolean = true
+    ): DraggableImageInfo {
+        val draggableInfo: DraggableImageInfo
+        if (draggableParamsInfo != null) {
+            draggableInfo = DraggableImageInfo(
+                originUrl,
+                thumbUrl,
+                draggableParamsInfo,
+                imgSize,
+                showDownLoadBtn
+            )
+        } else {
+            draggableInfo = DraggableImageInfo(originUrl, thumbUrl, imageSize = imgSize,imageCanDown = showDownLoadBtn)
+        }
+
+        draggableInfo.adjustImageUrl()
+
+        return draggableInfo
+    }
     /**
      * 根据宽高比，显示一张图片
      * @param whRadio  图片宽高比
@@ -161,27 +226,16 @@ object ImageViewerHelper {
         if (view != null) {
             val location = IntArray(2)
             view.getLocationInWindow(location)
-//            val windowRect = Rect()
-//            view.getWindowVisibleDisplayFrame(windowRect)
             val top = location[1]
-            draggableInfo = DraggableImageInfo(
-                originUrl,
-                thumbUrl,
-                DraggableParamsInfo(
-                    location[0],
-                    top,
-                    view.width,
-                    view.height
-                ),
-                imgSize,
-                showDownLoadBtn
-            )
+            draggableInfo=  createImageDraggableParamsWithWHRadioByD(  DraggableParamsInfo(
+                location[0],
+                top,
+                view.width,
+                view.height
+            ),originUrl,thumbUrl,imgSize,showDownLoadBtn)
         } else {
-            draggableInfo = DraggableImageInfo(originUrl, thumbUrl, imageSize = imgSize,imageCanDown = showDownLoadBtn)
+            draggableInfo = createImageDraggableParamsWithWHRadioByD(null,originUrl, thumbUrl, imgSize, showDownLoadBtn)
         }
-
-        draggableInfo.adjustImageUrl()
-
         return draggableInfo
     }
 

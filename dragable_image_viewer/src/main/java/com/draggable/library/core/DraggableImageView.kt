@@ -39,7 +39,6 @@ class DraggableImageView : FrameLayout {
         fun onExit() // drag to exit
     }
 
-    private val TAG = javaClass.simpleName
     private var draggableImageInfo: DraggableImageInfo? = null
     var actionListener: ActionListener? = null
     private var currentLoadUrl = ""
@@ -313,7 +312,6 @@ class DraggableImageView : FrameLayout {
 
         val bpHeight = (bpWidth * 1f / whRadio).toInt()
 
-        Log.d(TAG, "bpWidth : $bpWidth  bpHeight : $bpHeight")
 
         var bp = Glide.get(context).bitmapPool.get(
             bpWidth,
